@@ -1,0 +1,766 @@
+
+/* =====================================================
+   SKILLSWAP — COHESIVE EDITORIAL DESIGN
+   Palette: Graphite, Warm Ivory, Soft Grey
+   All primary buttons share ONE colour.
+   ===================================================== */
+
+:root {
+    --ink: #414343;
+    --ink-hover: #303232;
+    --page: #F1F0EC;
+    --surface: #FBFAF7;
+    --surface-soft: #EAE9E4;
+    --text: #414343;
+    --muted: #777975;
+    --border: #DCDCD6;
+    --focus: #858783;
+
+    --success-bg: #E8E8E3;
+    --success-text: #414343;
+    --error-bg: #F1E6E3;
+    --error-text: #8A4840;
+    --warning-bg: #EEECE5;
+    --warning-text: #645D50;
+
+    --radius: 13px;
+    --shadow: 0 5px 22px rgba(35, 35, 32, 0.055);
+    --shadow-hover: 0 10px 28px rgba(35, 35, 32, 0.10);
+}
+
+/* RESET */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0 !important;
+    background: var(--page) !important;
+    background-image: none !important;
+    color: var(--text) !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+    font-size: 15px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+::selection {
+    background: #D8D8D2;
+    color: #303232;
+}
+
+/* TYPOGRAPHY */
+
+h1, h2, h3, h4, h5 {
+    color: var(--ink) !important;
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+}
+
+h1 {
+    font-size: clamp(2rem, 4vw, 2.7rem);
+    margin: 0 0 14px;
+}
+
+h2 {
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+    margin: 0 0 15px;
+}
+
+h3 {
+    font-size: 1.12rem;
+    margin-top: 0;
+}
+
+p {
+    color: var(--muted);
+}
+
+strong {
+    font-weight: 650;
+}
+
+/* LINKS: NO DEFAULT BLUE */
+
+a {
+    color: var(--ink) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--ink-hover) !important;
+}
+
+/* NAVIGATION */
+
+header {
+    min-height: 72px;
+    padding: 17px clamp(20px, 6vw, 84px) !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    background: #414343 !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    box-shadow: 0 4px 16px rgba(35, 35, 32, 0.09);
+}
+
+header strong {
+    color: #FFFFFF !important;
+    font-size: 1.35rem;
+    letter-spacing: -0.035em;
+}
+
+header nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+header nav a,
+header a {
+    color: #F0F0EC !important;
+    margin-left: 0 !important;
+    padding: 8px 11px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+header nav a:hover,
+header a:hover {
+    background: #595B59 !important;
+    color: #FFFFFF !important;
+}
+
+/* PAGE LAYOUT */
+
+main {
+    width: min(100% - 36px, 1080px) !important;
+    max-width: 1080px !important;
+    margin: 38px auto !important;
+    padding: 0 !important;
+}
+
+main > p {
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.container,
+.page-container,
+.content-container {
+    width: min(100% - 36px, 1080px);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* CARDS */
+
+.card,
+.session-card,
+.auth-card,
+.form-card,
+.feature-card,
+.step-card,
+.dashboard-card,
+.panel {
+    background: var(--surface) !important;
+    background-image: none !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius) !important;
+    padding: clamp(20px, 3vw, 30px) !important;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow) !important;
+}
+
+.feature-card,
+.step-card {
+    height: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover,
+.step-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-hover) !important;
+}
+
+/* ALL PRIMARY BUTTONS: ONE GRAPHITE COLOUR */
+
+html body button,
+html body input[type="submit"],
+html body input[type="button"],
+html body a.button,
+html body a.btn,
+html body .btn,
+html body .btn-primary,
+html body .primary-btn,
+html body .primary-button,
+html body .cta-button,
+html body .join-us,
+html body .join-btn,
+html body .join-button,
+html body .join-now,
+html body .get-started,
+html body .hero button,
+html body .hero .button,
+html body .hero .btn,
+html body .hero-section .button,
+html body .hero-section .btn,
+html body .cta .button,
+html body .cta .btn,
+html body .cta-section .button,
+html body .cta-section .btn {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: auto;
+    min-height: 43px;
+    padding: 11px 19px !important;
+
+    background: #414343 !important;
+    background-color: #414343 !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+
+    border: 1px solid #414343 !important;
+    border-radius: 8px !important;
+
+    font-family: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none !important;
+
+    cursor: pointer;
+    box-shadow: none !important;
+    transform: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Consistent hover for every primary button */
+
+html body button:hover,
+html body input[type="submit"]:hover,
+html body input[type="button"]:hover,
+html body a.button:hover,
+html body a.btn:hover,
+html body .btn:hover,
+html body .btn-primary:hover,
+html body .primary-btn:hover,
+html body .primary-button:hover,
+html body .cta-button:hover,
+html body .join-us:hover,
+html body .join-btn:hover,
+html body .join-button:hover,
+html body .join-now:hover,
+html body .get-started:hover,
+html body .hero button:hover,
+html body .hero .button:hover,
+html body .hero .btn:hover,
+html body .hero-section .button:hover,
+html body .hero-section .btn:hover,
+html body .cta .button:hover,
+html body .cta .btn:hover,
+html body .cta-section .button:hover,
+html body .cta-section .btn:hover {
+    background: #303232 !important;
+    background-color: #303232 !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    border-color: #303232 !important;
+    transform: translateY(-1px);
+    box-shadow: none !important;
+}
+
+/* Secondary actions: neutral outline, never blue or brown */
+
+html body .secondary,
+html body .btn-secondary,
+html body .outline-button,
+html body a.secondary,
+html body a.btn-secondary {
+    background: var(--surface) !important;
+    background-color: var(--surface) !important;
+    background-image: none !important;
+    color: var(--ink) !important;
+    border: 1px solid #C9C9C2 !important;
+}
+
+html body .secondary:hover,
+html body .btn-secondary:hover,
+html body .outline-button:hover,
+html body a.secondary:hover,
+html body a.btn-secondary:hover {
+    background: var(--surface-soft) !important;
+    background-color: var(--surface-soft) !important;
+    color: var(--ink) !important;
+    border-color: #BDBDB6 !important;
+}
+
+/* Accept buttons also use the same graphite as primary buttons */
+
+html body .accept,
+html body .btn-success {
+    background: #414343 !important;
+    background-color: #414343 !important;
+    background-image: none !important;
+    color: #FFFFFF !important;
+    border-color: #414343 !important;
+}
+
+html body .accept:hover,
+html body .btn-success:hover {
+    background: #303232 !important;
+    background-color: #303232 !important;
+    color: #FFFFFF !important;
+    border-color: #303232 !important;
+}
+
+/* Destructive actions alone use a restrained neutral red */
+
+html body .delete-button,
+html body .reject,
+html body button.reject,
+html body .btn-danger {
+    background: #F1E6E3 !important;
+    background-color: #F1E6E3 !important;
+    background-image: none !important;
+    color: #8A4840 !important;
+    border-color: #E4D0CC !important;
+}
+
+html body .delete-button:hover,
+html body .reject:hover,
+html body button.reject:hover,
+html body .btn-danger:hover {
+    background: #EBDAD6 !important;
+    color: #753B34 !important;
+}
+
+/* LOGIN PAGE:
+   "Create an account" remains a simple inline text link.
+   It is not highlighted as a second-colour button. */
+
+body:has(form[action="/login"]) a[href*="register"],
+body:has(form[action="/login"]) a[href*="signup"] {
+    display: inline !important;
+    width: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+
+    color: var(--ink) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    text-decoration: underline;
+    text-decoration-color: #A3A39B;
+    text-underline-offset: 3px;
+}
+
+body:has(form[action="/login"]) a[href*="register"]:hover,
+body:has(form[action="/login"]) a[href*="signup"]:hover {
+    color: #111111 !important;
+}
+
+/* FORMS */
+
+form {
+    margin-top: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--ink);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]):not([type="button"]):not([type="hidden"]),
+select,
+textarea {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 13px !important;
+
+    background: #FFFFFF !important;
+    color: var(--text) !important;
+    border: 1px solid #D5D5CE !important;
+    border-radius: 8px !important;
+
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-shadow: none !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #92938D;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #858783 !important;
+    box-shadow: 0 0 0 3px rgba(90, 92, 88, 0.10) !important;
+    outline: none;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: #555754;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* SKILLS AND PEOPLE */
+
+.skill-item,
+.person {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 17px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.skill-item:last-child,
+.person:last-child {
+    border-bottom: none;
+}
+
+.skill-item strong,
+.person strong {
+    color: var(--ink);
+}
+
+.skill,
+.tag {
+    display: inline-block;
+    padding: 6px 11px;
+    margin-top: 7px;
+    border-radius: 20px;
+    font-size: 0.77rem;
+    font-weight: 650;
+}
+
+.skill,
+.tag.teach,
+.tag.learn {
+    background: #E8E8E3 !important;
+    color: #4A4B47 !important;
+}
+
+.status,
+.badge {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    background: #E8E8E3 !important;
+    color: #4A4B47 !important;
+    font-size: 0.76rem;
+    font-weight: 650;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.actions form,
+.delete-form {
+    margin: 0;
+}
+
+.empty,
+.muted,
+.details {
+    color: var(--muted) !important;
+}
+
+.details {
+    line-height: 1.8;
+}
+
+/* FEEDBACK */
+
+.message,
+.alert {
+    padding: 13px 16px;
+    margin: 15px 0;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 0.93rem;
+}
+
+.success,
+.message.success,
+.alert-success {
+    background: var(--success-bg) !important;
+    color: var(--success-text) !important;
+    border-color: #D8D8D1 !important;
+}
+
+.error,
+.message.error,
+.alert-error {
+    background: var(--error-bg) !important;
+    color: var(--error-text) !important;
+    border-color: #E4D0CC !important;
+}
+
+.warning,
+.message.warning,
+.alert-warning {
+    background: var(--warning-bg) !important;
+    color: var(--warning-text) !important;
+    border-color: #DEDCD3 !important;
+}
+
+/* HOMEPAGE HERO */
+
+.hero,
+.hero-section {
+    padding: clamp(34px, 6vw, 72px)
+             clamp(22px, 5vw, 60px);
+    margin-bottom: 36px;
+
+    background: #DEDED8 !important;
+    background-image: none !important;
+    color: var(--ink) !important;
+    border: 1px solid #D3D3CC;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.hero h1,
+.hero h2,
+.hero h3,
+.hero-section h1,
+.hero-section h2,
+.hero-section h3 {
+    color: var(--ink) !important;
+}
+
+.hero p,
+.hero-section p {
+    color: #656661 !important;
+    max-width: 680px;
+}
+
+.features,
+.feature-grid,
+.steps,
+.steps-grid,
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.cta,
+.cta-section {
+    padding: 30px;
+    margin: 28px 0;
+    background: #E7E6E0 !important;
+    background-image: none !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius);
+}
+
+.cta h2,
+.cta-section h2 {
+    color: var(--ink) !important;
+}
+
+.cta p,
+.cta-section p {
+    color: var(--muted) !important;
+}
+
+/* TABLES */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 13px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: #EAEAE4;
+    color: var(--ink);
+    font-weight: 650;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* FOOTER */
+
+footer {
+    padding: 26px 20px;
+    margin-top: 46px;
+    background: #414343 !important;
+    color: #F0F0EC !important;
+    text-align: center;
+}
+
+footer p,
+footer a {
+    color: #F0F0EC !important;
+}
+
+/* ACCESSIBILITY */
+
+button:focus-visible,
+.button:focus-visible,
+.btn:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 3px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    header nav {
+        width: 100%;
+    }
+
+    main {
+        margin-top: 26px !important;
+    }
+
+    .features,
+    .feature-grid,
+    .steps,
+    .steps-grid,
+    .dashboard-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    header {
+        padding: 16px 20px !important;
+    }
+
+    header nav a {
+        padding: 7px 8px;
+        font-size: 0.85rem;
+    }
+
+    main {
+        width: min(100% - 28px, 1080px) !important;
+    }
+
+    .card,
+    .session-card,
+    .auth-card,
+    .form-card,
+    .feature-card,
+    .step-card,
+    .dashboard-card,
+    .panel {
+        padding: 19px !important;
+    }
+
+    .form-grid,
+    .features,
+    .feature-grid,
+    .steps,
+    .steps-grid,
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: auto;
+    }
+
+    .skill-item,
+    .person {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .actions {
+        width: 100%;
+    }
+
+    .actions form {
+        flex: 1;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+
+    .hero,
+    .hero-section {
+        padding: 28px 22px;
+    }
+}

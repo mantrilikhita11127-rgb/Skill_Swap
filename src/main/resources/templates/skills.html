@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Skills - SkillSwap</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #25324a;
+        }
+
+        header {
+            background: #243b65;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+        }
+
+        main {
+            max-width: 950px;
+            margin: 35px auto;
+            padding: 0 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 15px #25324a12;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccd5e2;
+            font-size: 15px;
+        }
+
+        button {
+            background: #4267a9;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #304e86;
+        }
+
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .teach {
+            background: #d9f4e4;
+            color: #17663b;
+        }
+
+        .learn {
+            background: #e4e9ff;
+            color: #354b9a;
+        }
+
+        .delete-form {
+            margin: 0;
+            width: auto;
+        }
+
+        .delete-button {
+            width: auto;
+            background: #fff0f0;
+            color: #a32626;
+            border: 1px solid #f2cccc;
+            padding: 8px 12px;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .success {
+            background: #e1f6e9;
+            color: #17663b;
+        }
+
+        .error {
+            background: #ffeded;
+            color: #a32626;
+        }
+
+        .empty {
+            color: #69758a;
+            padding: 12px 0;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .skill-item {
+                align-items: flex-start;
+            }
+        }
+    </style>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header>
+    <strong>SkillSwap</strong>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/skills">My Skills</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <h1>My Skills</h1>
+    <p>Hi, <span th:text="${userName}">User</span>! Manage what you can teach and what you want to learn.</p>
+
+    <section class="card">
+        <h2>Add a Skill</h2>
+
+        <div th:if="${param.success}" class="message success">
+            Your skill has been saved successfully!
+        </div>
+
+        <div th:if="${param.error}" class="message error">
+            Please enter a valid skill name and select a valid skill type.
+        </div>
+
+        <form action="/skills" method="post">
+            <div class="form-grid">
+                <div>
+                    <label for="skillName">Skill name</label>
+                    <input
+                        type="text"
+                        id="skillName"
+                        name="skillName"
+                        placeholder="e.g. Python, Guitar, Graphic Design"
+                        maxlength="100"
+                        required>
+                </div>
+
+                <div>
+                    <label for="skillType">I want to...</label>
+                    <select id="skillType" name="skillType" required>
+                        <option value="TEACH">Teach</option>
+                        <option value="LEARN">Learn</option>
+                    </select>
+                </div>
+
+                <div>
+                    <button type="submit">Add Skill</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>My Saved Skills</h2>
+
+        <p class="empty" th:if="${#lists.isEmpty(skills)}">
+            You haven't added any skills yet. Add your first skill above!
+        </p>
+
+        <div th:each="skill : ${skills}" class="skill-item">
+            <div>
+                <strong th:text="${skill.skillName}">Python</strong>
+                <br>
+                <span
+                    class="tag"
+                    th:classappend="${skill.skillType == 'TEACH'} ? ' teach' : ' learn'"
+                    th:text="${skill.skillType == 'TEACH'} ? 'I CAN TEACH' : 'I WANT TO LEARN'">
+                    I CAN TEACH
+                </span>
+            </div>
+
+            <form
+                class="delete-form"
+                th:action="@{/skills/delete/{id}(id=${skill.id})}"
+                method="post"
+                onsubmit="return confirm('Are you sure you want to delete this skill?');">
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Join SkillSwap</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8ff;
+            color: #24324a;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .box {
+            background: white;
+            width: 100%;
+            max-width: 430px;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 5px 25px #dce5f1;
+        }
+        h1 { color: #3867d6; margin-top: 0; }
+        p { color: #68758b; line-height: 1.6; }
+        label { display: block; margin: 17px 0 7px; }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd8f4;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 22px;
+            border: 0;
+            border-radius: 8px;
+            background: #3867d6;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .error { color: #b42318; }
+        a { color: #3867d6; }
+    </style>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="box">
+    <h1>Create Account</h1>
+    <p>Join SkillSwap and start exchanging skills.</p>
+
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+
+    <form th:action="@{/register}" method="post">
+        <label for="fullName">Full name</label>
+        <input id="fullName" name="fullName"
+               type="text" required maxlength="100">
+
+        <label for="email">Email address</label>
+        <input id="email" name="email"
+               type="email" required maxlength="254">
+
+        <label for="password">Password</label>
+        <input id="password" name="password"
+               type="password" minlength="8" required>
+
+        <button type="submit">Create Account</button>
+    </form>
+
+    <p>Already have an account?
+        <a th:href="@{/login}" href="/login">Log in</a>
+    </p>
+    <p><a th:href="@{/}" href="/">Back to Home</a></p>
+</div>
+</body>
+</html>

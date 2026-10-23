@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Sessions - SkillSwap</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #25324a;
+        }
+
+        header {
+            background: #243b65;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 16px;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 0 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 14px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 15px #25324a12;
+        }
+
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd5e2;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        input, select {
+            background: white;
+            color: #25324a;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        button {
+            background: #4267a9;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #304e86;
+        }
+
+        .session-card {
+            border: 1px solid #e0e7f0;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 14px;
+        }
+
+        .session-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .status {
+            display: inline-block;
+            border-radius: 20px;
+            padding: 6px 10px;
+            background: #fff0d6;
+            color: #805516;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .details {
+            color: #69758a;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .actions form {
+            flex: 1;
+        }
+
+        .accept {
+            background: #d9f4e4;
+            color: #17663b;
+        }
+
+        .reject {
+            background: #fff0f0;
+            color: #a32626;
+        }
+
+        .message {
+            padding: 13px 15px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            background: #e1f6e9;
+            color: #17663b;
+        }
+
+        .warning {
+            background: #fff0d6;
+            color: #805516;
+        }
+
+        .empty {
+            color: #69758a;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 650px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header>
+    <strong>SkillSwap</strong>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/skills">My Skills</a>
+        <a href="/matches">Find Matches</a>
+        <a href="/connections">Connections</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <h1>Learning Sessions</h1>
+    <p>
+        Welcome, <span th:text="${userName}">User</span>!
+        Schedule learning sessions and manage your requests.
+    </p>
+
+    <div th:if="${param.sent}" class="message">
+        Your session request has been sent!
+    </div>
+
+    <div th:if="${param.updated}" class="message">
+        Your session request has been updated.
+    </div>
+
+    <div th:if="${param.error}" class="message warning">
+        Please check the session details and try again.
+    </div>
+
+    <div th:if="${param.past}" class="message warning">
+        Please choose a future date and time.
+    </div>
+
+    <div th:if="${param.notconnected}" class="message warning">
+        You can schedule a session only with an accepted connection.
+    </div>
+
+    <section class="card">
+        <h2>Schedule a Session</h2>
+        <p class="empty">
+            Choose one of your accepted connections, enter a topic,
+            and request a suitable time.
+        </p>
+
+        <div th:if="${#lists.isEmpty(partners)}">
+            <p class="empty">
+                You don't have any accepted connections yet.
+                Find a match and get your connection request accepted first.
+            </p>
+            <a href="/matches">Find Skill Matches</a>
+        </div>
+
+        <form th:if="${not #lists.isEmpty(partners)}"
+              action="/sessions" method="post">
+
+            <div class="form-grid">
+                <div class="full-width">
+                    <label for="recipientId">Choose a connection</label>
+                    <select id="recipientId" name="recipientId" required>
+                        <option value="">Select a person</option>
+                        <option th:each="partner : ${partners}"
+                                th:value="${partner.id}"
+                                th:text="${partner.fullName}">
+                            Connection
+                        </option>
+                    </select>
+                </div>
+
+                <div class="full-width">
+                    <label for="topic">Session topic</label>
+                    <input type="text"
+                           id="topic"
+                           name="topic"
+                           maxlength="120"
+                           placeholder="e.g. Introduction to Python"
+                           required>
+                </div>
+
+                <div>
+                    <label for="startTime">Date and time</label>
+                    <input type="datetime-local"
+                           id="startTime"
+                           name="startTime"
+                           required>
+                </div>
+
+                <div>
+                    <label for="durationMinutes">Duration</label>
+                    <select id="durationMinutes"
+                            name="durationMinutes" required>
+                        <option value="30">30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60">60 minutes</option>
+                    </select>
+                </div>
+
+                <div class="full-width">
+                    <button type="submit">Send Session Request</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>My Session Requests and Schedule</h2>
+
+        <p class="empty" th:if="${#lists.isEmpty(sessions)}">
+            No sessions yet. Schedule your first session above!
+        </p>
+
+        <div class="session-card" th:each="sessionItem : ${sessions}">
+            <div class="session-top">
+                <div>
+                    <h3 th:text="${sessionItem.topic}">Python Learning</h3>
+
+                    <p class="details">
+                        With:
+                        <strong
+                          th:text="${sessionItem.requester.id == currentUserId
+                            ? sessionItem.recipient.fullName
+                            : sessionItem.requester.fullName}">
+                            Connection Name
+                        </strong>
+                    </p>
+                </div>
+
+                <span class="status"
+                      th:text="${sessionItem.status}">
+                    PENDING
+                </span>
+            </div>
+
+            <p class="details">
+                <strong>Date and time:</strong>
+                <span th:text="${sessionItem.startTime}">2026-12-01T10:00</span>
+                <br>
+
+                <strong>Duration:</strong>
+                <span th:text="${sessionItem.durationMinutes}">30</span>
+                minutes
+                <br>
+
+                <strong>Requested by:</strong>
+                <span th:text="${sessionItem.requester.fullName}">User</span>
+            </p>
+
+            <div class="actions"
+                 th:if="${sessionItem.status.name() == 'PENDING'
+                    and sessionItem.recipient.id == currentUserId}">
+
+                <form th:action="@{/sessions/{id}/confirm(id=${sessionItem.id})}"
+                      method="post">
+                    <button type="submit" class="accept">
+                        Confirm Session
+                    </button>
+                </form>
+
+                <form th:action="@{/sessions/{id}/reject(id=${sessionItem.id})}"
+                      method="post">
+                    <button type="submit" class="reject">
+                        Reject Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

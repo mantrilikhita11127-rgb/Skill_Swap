@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Matches - SkillSwap</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #25324a;
+        }
+
+        header {
+            background: #243b65;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+        }
+
+        main {
+            max-width: 950px;
+            margin: 35px auto;
+            padding: 0 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin: 18px 0;
+            box-shadow: 0 4px 15px #25324a12;
+        }
+
+        .skill {
+            display: inline-block;
+            background: #d9f4e4;
+            color: #17663b;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 12px;
+            background: #4267a9;
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+        }
+
+        .empty {
+            color: #69758a;
+            line-height: 1.6;
+        }
+    </style>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+<header>
+    <strong>SkillSwap</strong>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/skills">My Skills</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <h1>Find Your Skill Matches</h1>
+    <p>
+        Welcome, <span th:text="${userName}">User</span>!
+        Here are people who can teach skills you want to learn.
+    </p>
+
+    <div th:if="${#lists.isEmpty(matches)}" class="card">
+        <h2>No matches yet</h2>
+        <p class="empty">
+            We couldn't find a matching teacher yet. Add skills under
+            "I want to learn" on your My Skills page, and ask other users
+            to list the skills they can teach.
+        </p>
+        <a class="button" href="/skills">Manage My Skills</a>
+    </div>
+
+   
+<div th:each="match : ${matches}" class="card">
+    <h2 th:text="${match.user.fullName}">User Name</h2>
+    <p>Can teach you:</p>
+    <span class="skill" th:text="${match.skillName}">Python</span>
+
+    <form
+        th:action="@{/connections/request/{targetUserId}(targetUserId=${match.user.id})}"
+        method="post">
+        <button class="button" type="submit">Send Connection Request</button>
+    </form>
+</div>
+
+
+    <p class="empty">
+        Matches are based on exact skill-name matches. More advanced
+        matching can be added later.
+    </p>
+    <p>
+        <br>
+        <a href="/connections">My Connections</a>
+    </p>
+</main>
+</body>
+</html>

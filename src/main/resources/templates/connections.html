@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Connections - SkillSwap</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #25324a;
+        }
+
+        header {
+            background: #243b65;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+            margin-left: 16px;
+        }
+
+        main {
+            max-width: 950px;
+            margin: 35px auto;
+            padding: 0 18px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            margin: 18px 0;
+            box-shadow: 0 4px 15px #25324a12;
+        }
+
+        .person {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            border-top: 1px solid #e4e9f0;
+            padding: 16px 0;
+        }
+
+        .person:first-of-type {
+            border-top: none;
+        }
+
+        .muted {
+            color: #69758a;
+            line-height: 1.5;
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        button, .button {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .accept {
+            background: #d9f4e4;
+            color: #17663b;
+        }
+
+        .reject {
+            background: #fff0f0;
+            color: #a32626;
+        }
+
+        .primary {
+            background: #4267a9;
+            color: white;
+        }
+
+        .message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin: 14px 0;
+            background: #e1f6e9;
+            color: #17663b;
+        }
+
+        @media (max-width: 600px) {
+            .person {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<header>
+    <strong>SkillSwap</strong>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/skills">My Skills</a>
+        <a href="/matches">Find Matches</a>
+        <a href="/connections">My Connections</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<main>
+    <h1>My Connections</h1>
+    <p>
+        Welcome, <span th:text="${userName}">User</span>!
+        Manage your connection requests and learning network here.
+    </p>
+
+    <div th:if="${param.sent}" class="message">
+        Connection request sent successfully!
+    </div>
+
+    <div th:if="${param.exists}" class="message">
+        A request or connection already exists between these users.
+    </div>
+
+    <section class="card">
+        <h2>Incoming Requests</h2>
+
+        <p class="muted" th:if="${#lists.isEmpty(incoming)}">
+            You don't have any pending connection requests.
+        </p>
+
+        <div class="person" th:each="connection : ${incoming}">
+            <div>
+                <strong th:text="${connection.requester.fullName}">
+                    Requesting User
+                </strong>
+                <p class="muted">Wants to connect with you.</p>
+            </div>
+
+            <div class="actions">
+                <form
+                    th:action="@{/connections/{id}/accept(id=${connection.id})}"
+                    method="post">
+                    <button class="accept" type="submit">Accept</button>
+                </form>
+
+                <form
+                    th:action="@{/connections/{id}/reject(id=${connection.id})}"
+                    method="post">
+                    <button class="reject" type="submit">Reject</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Requests You Sent</h2>
+
+        <p class="muted" th:if="${#lists.isEmpty(outgoing)}">
+            You haven't sent any pending requests.
+        </p>
+
+        <div class="person" th:each="connection : ${outgoing}">
+            <div>
+                <strong th:text="${connection.recipient.fullName}">
+                    Requested User
+                </strong>
+                <p class="muted">Request pending.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Connected Users</h2>
+
+        <p class="muted" th:if="${#lists.isEmpty(accepted)}">
+            No connections yet. Find a skill match and send a request!
+        </p>
+
+        <div class="person" th:each="connection : ${accepted}">
+            <div>
+                <strong
+                    th:text="${connection.requester.id == currentUserId
+                        ? connection.recipient.fullName
+                        : connection.requester.fullName}">
+                    Connected User
+                </strong>
+                <p class="muted">You are connected on SkillSwap.</p>
+            </div>
+        </div>
+
+        <a class="button primary" href="/matches">Find Skill Matches</a>
+    </section>
+</main>
+
+</body>
+</html>

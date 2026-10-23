@@ -1,0 +1,461 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SkillSwap | Teach, Learn, Connect</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f8ff;
+            color: #24324a;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 22px 8%;
+            background: #ffffff;
+            box-shadow: 0 2px 12px #dce5f1;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            color: #3867d6;
+            letter-spacing: -1px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #24324a;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            color: #3867d6;
+        }
+
+        nav .nav-join {
+            background: #3867d6;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 9px;
+        }
+
+        nav .nav-join:hover {
+            background: #2853b5;
+            color: white;
+        }
+
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 95px 25px 85px;
+            text-align: center;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 11px 19px;
+            border-radius: 30px;
+            background: #e2ebff;
+            color: #3867d6;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 27px;
+        }
+
+        h1 {
+            font-size: clamp(36px, 6vw, 64px);
+            line-height: 1.15;
+            letter-spacing: -2px;
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            color: #3867d6;
+        }
+
+        .intro {
+            max-width: 680px;
+            margin: 0 auto 32px;
+            line-height: 1.8;
+            color: #68758b;
+            font-size: 17px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #3867d6;
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 6px;
+            transition: 0.2s ease;
+        }
+
+        .button:hover {
+            background: #2853b5;
+            transform: translateY(-2px);
+        }
+
+        .secondary {
+            background: white;
+            color: #3867d6;
+            border: 1px solid #cbd8f4;
+        }
+
+        .secondary:hover {
+            background: #eaf0ff;
+            color: #2853b5;
+        }
+
+        .section-heading {
+            text-align: center;
+            padding: 0 20px;
+            margin: 0 auto 35px;
+        }
+
+        .section-heading h2 {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            color: #68758b;
+            line-height: 1.7;
+        }
+
+        .features {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 22px 85px;
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e8edf7;
+            border-radius: 18px;
+            padding: 28px 23px;
+            box-shadow: 0 5px 20px #e3eaf5;
+            transition: 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px #d9e3f4;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: #eaf0ff;
+            font-size: 25px;
+        }
+
+        .card h3 {
+            margin: 19px 0 12px;
+            font-size: 18px;
+        }
+
+        .card p {
+            color: #68758b;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .how-section {
+            background: #ffffff;
+            padding: 70px 22px;
+            text-align: center;
+        }
+
+        .steps {
+            max-width: 1000px;
+            margin: 38px auto 0;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .step {
+            padding: 25px;
+            background: #f5f8ff;
+            border-radius: 16px;
+        }
+
+        .step-number {
+            width: 42px;
+            height: 42px;
+            margin: 0 auto 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #3867d6;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #68758b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .cta {
+            max-width: 950px;
+            margin: 65px auto;
+            padding: 48px 25px;
+            text-align: center;
+            background: #e7eeff;
+            border-radius: 22px;
+        }
+
+        .cta h2 {
+            font-size: clamp(26px, 4vw, 36px);
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #68758b;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 27px 20px;
+            background: white;
+            border-top: 1px solid #e8edf7;
+            color: #68758b;
+            font-size: 14px;
+        }
+
+        @media (max-width: 850px) {
+            .features {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 70px;
+            }
+        }
+
+        @media (max-width: 520px) {
+            nav {
+                padding: 18px 5%;
+            }
+
+            .nav-links {
+                gap: 14px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 60px 18px;
+            }
+
+            h1 {
+                letter-spacing: -1px;
+            }
+
+            .intro {
+                font-size: 15px;
+            }
+
+            .section-heading h2 {
+                font-size: 27px;
+            }
+        }
+    </style>
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">SkillSwap.</div>
+
+        <div class="nav-links">
+            <a href="#features">Features</a>
+            <a href="#how">How it works</a>
+            <a th:href="@{/login}" href="/login">Log In</a>
+            <a class="nav-join"
+               th:href="@{/register}"
+               href="/register">Join Us</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="tag">🤝 Share skills. Grow together.</div>
+
+            <h1>
+                Teach what you know.<br>
+                <span>Learn what you love.</span>
+            </h1>
+
+            <p class="intro">
+                Connect with people who want to learn your skills
+                while teaching you something new. Find learning
+                partners, chat, schedule tutoring sessions and
+                manage everything from one place.
+            </p>
+
+            <a th:href="@{/register}" href="/register"
+               class="button">Get Started &rarr;</a>
+
+            <a th:href="@{/login}" href="/login"
+               class="button secondary">Log In</a>
+        </section>
+
+        <section id="features">
+            <div class="section-heading">
+                <h2>Everything you need to learn together</h2>
+                <p>Build connections, exchange knowledge and grow your skills.</p>
+            </div>
+
+            <div class="features">
+                <div class="card">
+                    <div class="icon">🔎</div>
+                    <h3>Skill Matching</h3>
+                    <p>
+                        Discover people whose teaching skills match
+                        what you want to learn and find opportunities
+                        to exchange knowledge.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">💬</div>
+                    <h3>Private Chat</h3>
+                    <p>
+                        Connect with your learning partners, discuss
+                        your goals and coordinate your learning plans.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📅</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>
+                        Organize tutoring sessions, check your schedule
+                        and manage planned learning activities.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="icon">📚</div>
+                    <h3>Learn and Teach</h3>
+                    <p>
+                        Keep track of the skills you teach and the
+                        skills you want to learn in one place.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="how-section" id="how">
+            <div class="section-heading">
+                <h2>How SkillSwap works</h2>
+                <p>Start exchanging knowledge in three simple steps.</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Create Your Profile</h3>
+                    <p>
+                        Sign up and add the skills you can teach
+                        and the skills you want to learn.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Find Your Match</h3>
+                    <p>
+                        Explore other learners and connect with
+                        people who share your learning interests.
+                    </p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Learn Together</h3>
+                    <p>
+                        Coordinate sessions, manage your calendar
+                        and exchange skills with your learning partners.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta">
+            <h2>Your next skill starts with a connection.</h2>
+            <p>
+                Join a community where everyone has something to teach
+                and something new to learn.
+            </p>
+
+            <a th:href="@{/register}" href="/register"
+               class="button">Join SkillSwap &rarr;</a>
+        </section>
+    </main>
+
+    <footer>
+        SkillSwap &copy; 2026 · Learn together, grow together.
+    </footer>
+
+</body>
+</html>

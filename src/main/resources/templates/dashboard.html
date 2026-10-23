@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard | SkillSwap</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f8ff;
+            color: #24324a;
+            margin: 0;
+        }
+        header {
+            background: white;
+            padding: 20px 7%;
+            box-shadow: 0 2px 12px #dce5f1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+        header strong { color: #3867d6; font-size: 24px; }
+        a { color: #3867d6; text-decoration: none; }
+        main { max-width: 1000px; margin: 50px auto; padding: 20px; }
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-top: 25px;
+            box-shadow: 0 5px 20px #e3eaf5;
+        }
+        .button {
+            display: inline-block;
+            background: #3867d6;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <strong>SkillSwap.</strong>
+    <a th:href="@{/logout}" href="/logout">Log Out</a>
+</header>
+
+<main>
+    <h1>
+        Welcome, <span th:text="${userName}">Learner</span>!
+    </h1>
+    <p>Your learning journey starts here.</p>
+
+    <div class="card">
+        <h2>Your Profile</h2>
+        <p>Next, you'll be able to add your teaching and learning skills.</p>
+        
+        <a href="/skills">Manage My Skills</a>
+        <br>
+        <br>
+        <a href="/matches">Find Skill Matches</a>
+        <br>
+        <br>
+        <a href="/connections">My Connections</a>
+        <br>
+        <br>
+        <a href="/sessions">My Learning Sessions</a>
+
+        <p><a class="button" th:href="@{/}" href="/">Back to Home</a></p>
+    </div>
+</main>
+</body>
+</html>
