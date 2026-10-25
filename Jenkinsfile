@@ -27,10 +27,14 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                bat 'docker --context desktop-linux build -t skillswap:1.0 .'
+       
+         stage('Build Docker Image') {
+           steps {
+               bat 'set "DOCKER_HOST=npipe:////./pipe/dockerDesktopLinuxEngine" && docker info'
+               bat 'set "DOCKER_HOST=npipe:////./pipe/dockerDesktopLinuxEngine" && docker build -t skillswap:1.0 .'
             }
+        }
+
         }
     }
 }
