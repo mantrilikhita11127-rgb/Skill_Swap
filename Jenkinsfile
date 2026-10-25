@@ -29,7 +29,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t skillswap:1.0 .'
+                bat 'docker --context desktop-linux build -t skillswap:1.0 .'
             }
         }
     }
